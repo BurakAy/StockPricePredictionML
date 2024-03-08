@@ -1,0 +1,6 @@
+Flask
+yfinance
+matplotlib
+pandas
+seaborn
+scikit-learn
