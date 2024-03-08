@@ -36,17 +36,16 @@ def index():
     selected = tickers[0]
     company = ''
     industry = ''
-    employees = ''
     country = ''
 
     if loaded == False:
         get_ticker_data(selected)
-        company, industry, employees, country = get_company_details(selected)
+        company, industry, country = get_company_details(selected)
         loaded = True
 
     if request.method == 'POST':
         selected = request.form.get('ticker')
-        company, industry, employees, country = get_company_details(selected)
+        company, industry, country = get_company_details(selected)
         get_ticker_data(selected)
 
     return render_template(
@@ -55,7 +54,6 @@ def index():
         selected_ticker = selected,
         company_name = company,
         industry = industry,
-        employees = employees,
         country = country,
         price_history = line_img_data,
         correlation = heat_img_data,
@@ -68,9 +66,8 @@ def index():
 def get_company_details(ticker):
     company_name = yf.Ticker(ticker).info['longName']
     industry = yf.Ticker(ticker).info['industry']
-    employees = yf.Ticker(ticker).info['fullTimeEmployees']
     country = yf.Ticker(ticker).info['country']
-    return company_name, industry, employees, country
+    return company_name, industry, country
 
 # read the CSV file to get share price data for the selected ticker
 def get_ticker_data(ticker):
