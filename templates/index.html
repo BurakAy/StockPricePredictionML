@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Stock Price Predicting ML Model</title>
+</head>
+<body>
+    <h1>Stock Price Predicting ML Model</h1>
+    <div class="content-wrapper">
+        <div id="ticker-company-info">
+            <h2>Tickers</h2>
+            <form method="POST">
+                <label for="ticker">Select a ticker:</label>
+                <select name="ticker" id="ticker" onchange="this.form.submit()">
+                    <option value="{{ selected_ticker }}" selected>{{ selected_ticker }}</option>
+                    {% for ticker in data %}
+                    <option value="{{ ticker }}">{{ ticker }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+            <div id="company-details">
+                {% if company_name %}
+                <h3>Company Details</h3>
+                <p>{{ company_name }}</p>
+                <p>Industry: {{ industry }}</p>
+                <p>Employees: {{ employees }}</p>
+                <p>Country: {{ country }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div id="ticker-charts">
+            <h2>Charts</h2>
+            <div id="chart-elements">
+                <p>Select a chart:</p>
+                <div id="chart-buttons">
+                    <button onclick="showPriceHistory()" class="chart-btn selected">1yr History</button>
+                    <button onclick="showPricePrediction()" class="chart-btn">Price Prediction</button>
+                    <button onclick="showCorrelation()" class="chart-btn">Values Correlation</button>
+                </div>
+            </div>
+            <div id="chart-container">
+                <h3 class="chart-type">Price History</h3>
+                <p id="accuracy" style="display: none;">Accuracy: {{ accuracy_metric_mse }} (MSE) | {{ accuracy_metric_mae }} (MAE) </p>
+                <img class="chart-img" src="data:image/png;base64,{{ price_history }}">
+            </div>
+
+            <script>
+                const chart_type = document.querySelector('.chart-type')
+                const chart_element = document.querySelector('.chart-img')
+                const accuracy = document.querySelector('#accuracy')
+
+                const showPriceHistory = () => {
+                    chart_type.innerHTML = 'Price History'
+                    chart_element.setAttribute('src', 'data:image/png;base64,{{ price_history }}')
+                    accuracy.style.display = 'none'
+                    
+                    document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('selected'));
+                    event.target.classList.add('selected');
+                }
+
+                const showPricePrediction = () => {
+                    chart_type.innerHTML = 'Price Predictions'
+                    chart_element.setAttribute('src', 'data:image/png;base64,{{ predicted }}')
+                    accuracy.style.display = 'block'
+                    
+                    document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('selected'));
+                    event.target.classList.add('selected');
+                }
+
+                const showCorrelation = () => {
+                    chart_type.innerHTML = 'Correlation'
+                    chart_element.setAttribute('src', 'data:image/png;base64,{{ correlation }}')
+                    accuracy.style.display = 'none'
+
+                    document.querySelectorAll('.chart-btn').forEach(btn => btn.classList.remove('selected'));
+                    event.target.classList.add('selected');
+                }
+            </script>
+        </div>
+    </div>
+</body>
+</html>
