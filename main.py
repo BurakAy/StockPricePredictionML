@@ -26,19 +26,23 @@ heat_img_data = ''
 predicted_img_data = ''
 mse = 0.0
 mae = 0.0
+loaded = False
 
 app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    global loaded
     selected = tickers[0]
     company = ''
     industry = ''
     employees = ''
     country = ''
 
-    get_ticker_data(selected)
-    company, industry, employees, country = get_company_details(selected)
+    if loaded == False:
+        get_ticker_data(selected)
+        company, industry, employees, country = get_company_details(selected)
+        loaded = True
 
     if request.method == 'POST':
         selected = request.form.get('ticker')
