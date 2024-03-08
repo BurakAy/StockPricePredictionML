@@ -161,3 +161,11 @@ def plot_data(ticker_data, actual, prediction):
     
 if __name__ == '__main__':
     app.run(debug=True)
+
+# this method should be manually run only if there are no data files
+# create CSV files containing the last year of share price data for each stock ticker listed in the S&P 500
+def create_data_files():
+    for ticker in tickers:
+        data = yf.download(ticker, group_by="Ticker", period="1y")
+        data['ticker'] = ticker
+        data.to_csv(f'./data_files/{ticker}.csv')
