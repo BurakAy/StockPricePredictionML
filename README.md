@@ -1,4 +1,6 @@
 ## About
+Technologies Used: Python, Flask, yfinance, pandas, seaborn, matplotlib, scikit-learn, JavaScript
+
 Flask web app for S&P 500 stock analysis, utilizing yfinance for data retrieval and linear regression for price prediction.
 Model accuracy is assessed using mean squared error (MSE) and mean absolute error (MAE). 
 Visualizations such as line charts, heatmaps, and scatter plots are presented for data analysis.
