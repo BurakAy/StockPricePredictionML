@@ -21,7 +21,7 @@ The application has been deployed as a Flask web application.
 
 *Note: The application is hosted on a free plan which spins down the instance with inactivity. This may result in slow or delayed loading of the app and charts. On the first visit to the URL, please allow up to one minute for the application to spin up on the hosting provider.
 
-2. When the application has loaded, you should see the following page:
+2. When the application has loaded, you should see the following user interface:
 ![image](https://github.com/BurakAy/StockPricePredictionML/assets/14030652/f1cdc408-a492-434d-b1d2-1ffbb031f6ff)
 
 3. Select a stock ticker from the dropdown menu under ‘Tickers’ to generate the charts for the selected ticker.
